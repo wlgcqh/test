@@ -25,6 +25,7 @@ public class Client extends JFrame {
 	private JTextField hostaddress;
 	private JTextField port;
 	
+	
 	private JButton button1;
 	private JButton button2;
 	

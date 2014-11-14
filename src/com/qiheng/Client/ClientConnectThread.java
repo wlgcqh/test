@@ -23,6 +23,7 @@ public class ClientConnectThread extends Thread {
 		this.frame = frame;
 		this.hostAddress = hostAddress;
 		this.port = port;
+		
 		this.username = username;
 	}
 

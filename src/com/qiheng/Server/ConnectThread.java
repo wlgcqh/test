@@ -62,6 +62,7 @@ public class ConnectThread extends Thread {
 					out.close();
 
 					socket.close();
+					
 
 				} else {
 					String success = CharacterUtil.SUCCESS;
