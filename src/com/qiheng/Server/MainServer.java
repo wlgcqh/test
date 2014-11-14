@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.xml.ws.handler.MessageContext.Scope;
 
 import com.qiheng.util.CharacterUtil;
 
@@ -28,6 +30,22 @@ public class MainServer extends JFrame {
 	private JTextField textfield;
 	private JScrollPane scrollPane;
 	private JButton button;
+	
+	
+	
+	private Map<String,String> map=new HashMap<String,String>();//用户名与端口号的映射
+	
+	private Thread thread;
+	
+	
+
+	public Map<String, String> getMap() {
+		return map;
+	}
+
+	public void setMap(Map<String, String> map) {
+		this.map = map;
+	}
 
 	public MainServer() throws HeadlessException {
 		super("服务器");
@@ -35,7 +53,7 @@ public class MainServer extends JFrame {
 
 	}
 
-	public void init() {
+	private void init() {
 		panel1 = new JPanel();
 		panel2 = new JPanel();
 		label1 = new JLabel();
@@ -106,6 +124,26 @@ public class MainServer extends JFrame {
 			textfield.setText("");
 			textfield.requestFocus();
 			return;
+			
+		}
+		int hostport=Integer.parseInt(port);
+		System.out.println(hostport);
+		thread=new ConnectThread(this, "ConnectThread", hostport);
+		thread.start();
+		this.button.setText("运行中");
+		this.label3.setText("运行中");
+		this.textfield.setEnabled(false);
+		this.button.setEnabled(false);
+		
+		
+	}
+	public void setUserList(){
+		this.textarea.setText("");
+		for(Iterator<String> iter=map.keySet().iterator();iter.hasNext();){
+			String key=(String) iter.next();
+			this.textarea.append(key+"\n");
 		}
 	}
+
+	
 }
